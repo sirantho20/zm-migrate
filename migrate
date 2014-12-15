@@ -1,0 +1,14 @@
+#!/usr/bin/php
+<?php
+/**
+ * Created by PhpStorm.
+ * User: tony
+ * Date: 12/15/14
+ * Time: 9:22 PM
+ */
+
+
+$zm_host = readline("Zimbra Host: ").PHP_EOL;
+$zm_user = readline("Zimbra Admin Username: ").PHP_EOL;
+$zm_password = readline("Zimbra Admin Password: ").PHP_EOL;
+

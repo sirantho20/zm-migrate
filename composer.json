@@ -1,0 +1,17 @@
+{
+    "name": "sirantho20/zm-migrate",
+    "type": "library",
+    "description": "PHP library for migrating zimbra email accounts using imapsync",
+    "keywords": ["Email", "soap", "web service", "migration", "Zimbra API"],
+    "license": "BSD (3-Clause) License",
+    "authors": [
+        {
+            "name": "Anthony Afetsrom",
+            "email": "sirantho20@gmail.com",
+            "homepage": "https://github.com/sirantho20"
+        }
+    ],
+    "require": {
+        "zimbra/soap-api": "dev-master"
+    }
+}
