@@ -128,7 +128,7 @@ generate_sql()
         cat >> ${SQL} <<EOF
 INSERT IGNORE INTO mailbox (username, password, name, storagebasedirectory,storagenode, maildir, quota, domain, active, local_part, created)
     VALUES ('${mail}', '${CRYPT_PASSWD}', '${username}', '${STORAGE_BASE}','${STORAGE_NODE}', '${maildir}', '${DEFAULT_QUOTA}', '${DOMAIN}', '1','${username}', NOW());
-INSERT INTO alias (address, goto, domain, created, active) VALUES ('${mail}', '${mail}','${DOMAIN}', NOW(), 1);
+INSERT IGNORE INTO alias (address, goto, domain, created, active) VALUES ('${mail}', '${mail}','${DOMAIN}', NOW(), 1);
 EOF
     done
 }
