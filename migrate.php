@@ -23,6 +23,7 @@ class migrate {
     public $server2;
     public $password2 = 'P@ssw0rd';
     public $migrationScript;
+    public $sql;
 
     public function __construct($server, $user, $pass, $db_host, $db_user, $db_pass, $db_name, $server2)
     {
@@ -102,6 +103,7 @@ class migrate {
         $imap = '';
         foreach ($mailboxes as $mailbox) {
             $qr = "select username from mailbox where username= '$mailbox'";
+
             if(count($this->pdo->query($qr)->fetchAll()) > 0)
             {
                 $split = explode("@", $mailbox);
