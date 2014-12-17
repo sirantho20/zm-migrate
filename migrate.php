@@ -38,7 +38,7 @@ class migrate {
 
         $this->pdo = new PDO(sprintf("mysql:dbname=%s;host=%s",$this->db_name,$this->db_host),$this->db_user, $this->db_pass);
         $this->zim = new \zimbraAdmin('mail2.i-webb.net', 'admin@mail2.i-webb.net', '!AFtony19833');
-        $this->doMigrate();
+        //$this->doMigrate();
 
     }
     public function getAllDomains()
@@ -130,13 +130,16 @@ class migrate {
 
         //Generate SQL file
         echo 'Generating new sql file for mailboxes'.PHP_EOL;
+        echo $cmd.PHP_EOL;
         shell_exec("$cmd");
+        //$this->sql .= $cmd.' ';
 
         //Execue SQL to create mailboxes
         //echo 'Executing sql in db'.PHP_EOL;
         //$cr = "mysql -u".$this->db_user." -p".$this->db_pass." -h".$this->db_host." -D".$this->db_name." < ".realpath('dump/output.sql');
         //shell_exec("$cr");
-        $this->migrationScript .= $imap;
+        //$this->migrationScript .= $imap;
+        file_put_contents('migrationScript.sh',substr($imap,0,strlen($imap)-4));
     }
 
     public function getDomainAccounts($domain)
@@ -177,4 +180,5 @@ $obj = new migrate('mail2.i-webb.net','tony@mail2.i-webb.net','AFtony19833','loc
 //print_r($obj->getDomainAccounts('bullion.com.gh'));
 //exec(sprintf("%s > %s 2>&1 & echo $! >> %s", "ls -la", 'dump/outfile', "dump/pid"),$out,$ret);
 //echo realpath('create_mail_user_SQL.sh').PHP_EOL;
-//$obj->createMailboxes('petroniacity.com');
+$domain = readline('Domain Name: ');
+$obj->createMailboxes($domain);;
