@@ -37,7 +37,7 @@ class migrate {
 
         $this->pdo = new PDO(sprintf("mysql:dbname=%s;host=%s",$this->db_name,$this->db_host),$this->db_user, $this->db_pass);
         $this->zim = new \zimbraAdmin('mail2.i-webb.net', 'admin@mail2.i-webb.net', '!AFtony19833');
-        $this->doMigrate();
+        //$this->doMigrate();
 
     }
     public function getAllDomains()
@@ -171,6 +171,8 @@ class migrate {
 }
 
 $obj = new migrate('mail2.i-webb.net','tony@mail2.i-webb.net','AFtony19833','localhost','root','AFtony19833','vmail','mx.softcube.co');
+$domain = readline('Domain Name');
+$obj->createMailboxes($domain);
 //$obj->insertDomain('example.com');
 //print_r($obj->getDomainAccounts('bullion.com.gh'));
 //exec(sprintf("%s > %s 2>&1 & echo $! >> %s", "ls -la", 'dump/outfile', "dump/pid"),$out,$ret);

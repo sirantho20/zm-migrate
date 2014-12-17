@@ -43,7 +43,7 @@ DEFAULT_PASSWD='P@ssw0rd'
 USE_DEFAULT_PASSWD='YES'     # If set to 'NO', password is the same as username.
 
 # Default mail quota.
-DEFAULT_QUOTA='2000'   # 100 -> 100M
+DEFAULT_QUOTA='20000'   # 100 -> 100M
 
 # -------------- You may not need to change variables below -------------------
 # Mailbox format: mbox, Maildir.
