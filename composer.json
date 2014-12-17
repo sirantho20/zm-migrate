@@ -12,6 +12,6 @@
         }
     ],
     "require": {
-        "zimbra/soap-api": "dev-master"
+
     }
 }

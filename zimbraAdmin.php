@@ -4,7 +4,8 @@
  * origins
  * ftp://ftp.rongage.org/pub/zimbraAdmin/
  */
-namespace Lib;
+require_once 'xmlparse.php';
+
 class zimbraAdmin {
     private $soapheader;
     public $zimbraerror;
@@ -15,7 +16,7 @@ class zimbraAdmin {
     private $curlhandle;
 
     public function  __construct($server, $adminuser, $adminpass ) {
-
+        $this->server = $server;
         $this->curlhandle = curl_init();
         curl_setopt($this->curlhandle, CURLOPT_URL, "https://$this->server:7071/service/admin/soap");
         curl_setopt($this->curlhandle, CURLOPT_POST, TRUE);
@@ -50,7 +51,7 @@ class zimbraAdmin {
 
     public function zimbra_login($adminuser, $adminpass) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<AuthRequest xmlns="urn:zimbraAdmin">
@@ -77,7 +78,7 @@ class zimbraAdmin {
 
     private function zimbra_delegate_auth($account, $accounttype = "name", $duration = 0) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<DelegateAuthRequest xmlns="urn:zimbraAdmin"';
@@ -107,7 +108,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_admin_accounts() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<GetAllAdminAccountsRequest xmlns="urn:zimbraAdmin">
@@ -129,7 +130,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_accounts($domain, $by = "name") {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<GetAllAccountsRequest xmlns="urn:zimbraAdmin">
@@ -172,7 +173,7 @@ class zimbraAdmin {
 
     public function zimbra_set_account_password($name, $password) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $id = $this->zimbra_get_id_from_account($name);
         $soapmessage = $this->soapheader . '
@@ -203,7 +204,7 @@ class zimbraAdmin {
 
     public function zimbra_add_account_alias($name, $alias) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $id = $this->zimbra_get_id_from_account($name);
         $soapmessage = $this->soapheader . '
@@ -228,7 +229,7 @@ class zimbraAdmin {
 
     public function zimbra_remove_account_alias($name, $alias) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $id = $this->zimbra_get_id_from_account($name);
         $soapmessage = $this->soapheader . '
@@ -253,7 +254,7 @@ class zimbraAdmin {
 
     public function zimbra_create_account($name, $password, $a = array ()) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<CreateAccountRequest xmlns="urn:zimbraAdmin">
@@ -287,7 +288,7 @@ class zimbraAdmin {
 
     public function zimbra_get_account($name, $type = "name", $apply = 1) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<GetAccountRequest xmlns="urn:zimbraAdmin"';
@@ -312,7 +313,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_get_account_info($name, $type = "name") {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<GetAccountInfoRequest xmlns="urn:zimbraAdmin">
@@ -334,7 +335,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_get_account_membership($name, $type = "name") {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<GetAccountMembershipRequest xmlns="urn:zimbraAdmin">
@@ -358,7 +359,7 @@ class zimbraAdmin {
     public function zimbra_modify_account($name, $a) {
         $id = $this->zimbra_get_id_from_account($name);
         //$id = $name;
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 	<ModifyAccountRequest xmlns="urn:zimbraAdmin">
@@ -392,7 +393,7 @@ class zimbraAdmin {
 
     public function zimbra_rename_account($name, $newname) {
         $id = $this->zimbra_get_id_from_domain($name);
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<RenameAccountRequest xmlns="urn:zimbraAdmin">
@@ -416,7 +417,7 @@ class zimbraAdmin {
 
     public function zimbra_check_password_strength($name, $password) {
         $id = $this->zimbra_get_id_from_domain($name);
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<CheckPasswordStrengthRequest xmlns="urn:zimbraAdmin">
@@ -439,7 +440,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_delete_account($name) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $id = $this->zimbra_get_id_from_account($name);
         $soapmessage = $this->soapheader . '
@@ -469,7 +470,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_auto_complete_gal($domain, $name, $limit = 0, $type = "account") {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<AutoCompleteGalRequest xmlns="urn:zimbraAdmin" domain=\"$domain\" type=\"$type\" limit=\"$limit\">
@@ -493,7 +494,7 @@ class zimbraAdmin {
      *
      */
     public function zimbra_search_gal($name,$domain,$type = "all") {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<SearchGalRequest xmlns="urn:zimbraAdmin" domain="'.$domain.'" type="'.$type.'">
@@ -525,7 +526,7 @@ class zimbraAdmin {
      */
     public function zimbra_get_quota_usage($domain, $limit = 0, $offset = 0, $sort = "", $sortAsc = "") {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetQuotaUsageRequest xmlns="urn:zimbraAdmin"';
@@ -560,7 +561,7 @@ class zimbraAdmin {
      */
     public function zimbra_get_all_quota_usage() {
         $limit = 0; $offset = 0;$sort = ""; $sortAsc = "";
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetQuotaUsageRequest xmlns="urn:zimbraAdmin"';
@@ -590,7 +591,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_get_quota_usage_once($limit = 0, $offset = 0, $domain = "", $sort = "", $sortAsc = ""){
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetQuotaUsageRequest xmlns="urn:zimbraAdmin"';
@@ -623,7 +624,7 @@ class zimbraAdmin {
     }
     public function zimbra_create_cos($name, $a = array ()) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<CreateCosRequest xmlns="urn:zimbraAdmin">
@@ -657,7 +658,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_cos() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetAllCosRequest xmlns="urn:zimbraAdmin">
@@ -682,7 +683,7 @@ class zimbraAdmin {
      */
     public function zimbra_get_cos($name,$domain,$type = "name") {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetCosRequest xmlns="urn:zimbraAdmin" domain="'.$domain.'">
@@ -706,7 +707,7 @@ class zimbraAdmin {
 
     public function zimbra_modify_cos($name, $a) {
         $id = $this->zimbra_get_id_from_cos($name);
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<ModifyCosRequest xmlns="urn:zimbraAdmin">
@@ -734,7 +735,7 @@ class zimbraAdmin {
 
     public function zimbra_rename_cos($name, $newname) {
         $id = $this->zimbra_get_id_from_cos($name);
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<RenameCosRequest xmlns="urn:zimbraAdmin">
@@ -757,7 +758,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_delete_cos($name) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $id = $this->zimbra_get_id_from_cos($name);
         $soapmessage = $this->soapheader . '
@@ -781,7 +782,7 @@ class zimbraAdmin {
 
     public function zimbra_create_server($name, $a = array ()) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<CreateServerRequest xmlns="urn:zimbraAdmin">
@@ -808,7 +809,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_servers() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetAllServersRequest xmlns="urn:zimbraAdmin">
@@ -830,7 +831,7 @@ class zimbraAdmin {
 
     public function zimbra_get_server($name, $type = "name", $apply = "") {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetServerRequest xmlns="urn:zimbraAdmin"';
@@ -856,7 +857,7 @@ class zimbraAdmin {
 
     public function zimbra_modify_server($name, $a) {
         $id = $this->zimbra_get_id_from_server($name);
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<ModifyServerRequest xmlns="urn:zimbraAdmin">
@@ -882,7 +883,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_delete_server($name) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $id = $this->zimbra_get_id_from_server($name);
         $soapmessage = $this->soapheader . '
@@ -906,7 +907,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_domains() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetAllDomainsRequest xmlns="urn:zimbraAdmin">
@@ -928,7 +929,7 @@ class zimbraAdmin {
 
     public function zimbra_create_domain($domain, $a = array ()) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<CreateDomainRequest xmlns="urn:zimbraAdmin">
@@ -962,7 +963,7 @@ class zimbraAdmin {
 
     public function zimbra_get_domain($domain, $type = "name", $apply = 1) {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetDomainRequest xmlns="urn:zimbraAdmin"';
@@ -994,7 +995,7 @@ class zimbraAdmin {
 
     public function zimbra_modify_domain($name, $a) {
         $id = $this->zimbra_get_id_from_domain($name);
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<ModifyDomainRequest xmlns="urn:zimbraAdmin">
@@ -1028,7 +1029,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_delete_domain($id) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<DeleteDomainRequest xmlns="urn:zimbraAdmin">
@@ -1058,7 +1059,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_get_config($a) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetConfigRequest xmlns="urn:zimbraAdmin">';
@@ -1083,7 +1084,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_modify_config($a) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<ModifyConfigRequest xmlns="urn:zimbraAdmin">';
@@ -1109,7 +1110,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_config() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetAllConfigRequest xmlns="urn:zimbraAdmin">
@@ -1130,7 +1131,7 @@ class zimbraAdmin {
     }
 
     public function zimbra_search_directory_request($query, $domain = "", $type = "accounts", $limit = 0, $offset = 0, $apply = 0, $max = 0) {
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<SearchDirectoryRequest xmlns="urn:zimbraAdmin"';
@@ -1165,7 +1166,7 @@ class zimbraAdmin {
 
     public function zimbra_get_service_status() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetServiceStatusRequest xmlns="urn:zimbraAdmin">
@@ -1187,7 +1188,7 @@ class zimbraAdmin {
 
     public function zimbra_maintain_tables() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<MaintainTablesRequest xmlns="urn:zimbraAdmin">
@@ -1209,7 +1210,7 @@ class zimbraAdmin {
 
     public function zimbra_get_all_volumes() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetAllVolumesRequest xmlns="urn:zimbraAdmin">
@@ -1231,7 +1232,7 @@ class zimbraAdmin {
 
     public function zimbra_get_current_volumes() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetCurrentVolumesRequest xmlns="urn:zimbraAdmin">
@@ -1253,7 +1254,7 @@ class zimbraAdmin {
 
     public function zimbra_get_version_info() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetVersionInfoRequest xmlns="urn:zimbraAdmin">
@@ -1275,7 +1276,7 @@ class zimbraAdmin {
 
     public function zimbra_get_license_info() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetlicenseInfoRequest xmlns="urn:zimbraAdmin">
@@ -1297,7 +1298,7 @@ class zimbraAdmin {
 
     public function zimbra_get_zimlet_status() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<GetZimletStatusRequest xmlns="urn:zimbraAdmin">
@@ -1319,7 +1320,7 @@ class zimbraAdmin {
 
     public function zimbra_dump_sessions() {
 
-        $xml = new xml2Array();
+        $xml = new \xml2Array();
         $this->set_zimbra_header();
         $soapmessage = $this->soapheader . '
 		<DumpSessionsRequest xmlns="urn:zimbraAdmin">

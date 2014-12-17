@@ -1,0 +1,40 @@
+Transfer started at Tue Dec 16 23:51:06 2014
+PID is 29343
+Log file is LOG_imapsync/2014_12_16_23_51_06_nkbediako@petroniacity.com.txt
+$RCSfile: imapsync,v $ $Revision: 1.607 $ $Date: 2014/11/14 16:25:06 $ 
+Here is a [linux] system (Linux dev 3.13.0-40-generic #69-Ubuntu SMP Thu Nov 13 17:53:56 UTC 2014 x86_64)
+With perl 5.18.2 Mail::IMAPClient  3.35
+Command line used:
+/usr/bin/imapsync --host1 mail2.i-webb.net --ssl1 --ssl2 --user1 admin@mail2.i-webb.net --password1 MASKED --authuser1 admin@mail2.i-webb.net --host2 mx.softcube.co --user2 nkbediako@petroniacity.com --password2 MASKED
+Temp directory is /tmp
+PID file is /tmp/imapsync.pid
+Modules version list:
+Mail::IMAPClient     3.35
+IO::Socket           1.36
+IO::Socket::IP       ?
+IO::Socket::INET     1.33
+IO::Socket::SSL      1.965
+Net::SSLeay          1.58
+Digest::MD5          2.52
+Digest::HMAC_MD5     1.01
+Digest::HMAC_SHA1    1.03
+Term::ReadKey        2.31
+Authen::NTLM         ?
+File::Spec           3.40
+Time::HiRes          1.9725
+URI::Escape          3.31
+Data::Uniqid         ?
+Unicode::String      2.09
+
+Info: turned ON syncinternaldates, will set the internal dates (arrival dates) on host2 same as host1.
+Info: will try to use PLAIN authentication on host1
+Info: will try to use LOGIN authentication on host2
+Info: imap connexions timeout is 120 seconds
+Host1: IMAP server [mail2.i-webb.net] port [993] user [admin@mail2.i-webb.net]
+Host2: IMAP server [mx.softcube.co] port [993] user [nkbediako@petroniacity.com]
+Host1: * OK IMAP4 ready
+Host1: mail2.i-webb.net says it has CAPABILITY for AUTHENTICATE PLAIN
+Host1: success login on [mail2.i-webb.net] with user [admin@mail2.i-webb.net] auth [PLAIN]
+Host2: * OK [CAPABILITY IMAP4rev1 LITERAL+ SASL-IR LOGIN-REFERRALS ID ENABLE IDLE AUTH=PLAIN AUTH=LOGIN] Dovecot (Ubuntu) ready.
+Host2: mx.softcube.co says it has CAPABILITY for AUTHENTICATE LOGIN
+Failure: error login on [mx.softcube.co] with user [nkbediako@petroniacity.com] auth [LOGIN]: 2 NO [AUTHENTICATIONFAILED] Authentication failed.

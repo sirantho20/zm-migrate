@@ -1,0 +1,18 @@
+total 212
+drwxrwxr-x 5 tony tony  4096 Dec 16 20:45 .
+drwxrwxr-x 3 tony tony  4096 Dec 15 21:07 ..
+-rw-rw-r-- 1 tony tony   475 Dec 16 17:31 composer.json
+-rw-rw-r-- 1 tony tony  4636 Dec 16 20:21 create_mail_user_SQL.sh
+drwxrwxr-x 8 tony tony  4096 Dec 16 20:45 .git
+-rw-rw-r-- 1 tony tony     8 Dec 15 23:36 .gitignore
+drwxrwxr-x 4 tony tony  4096 Dec 16 20:45 .idea
+-rwxrwxr-x 1 tony tony   266 Dec 16 18:00 migrate
+-rwxrwxr-x 1 tony tony  2852 Dec 16 20:45 migrate.php
+-rwxrwxr-x 1 tony tony   889 Dec 16 17:38 migration.php
+-rw-rw-r-- 1 tony tony     0 Dec 16 20:45 outfile
+-rw-rw-r-- 1 tony tony   429 Dec 16 19:48 output.sql
+-rw-rw-r-- 1 tony tony    12 Dec 16 20:45 pid
+-rw-r--r-- 1 root root    40 Dec 15 23:44 README.md
+drwxr-xr-x 3 root root  4096 Dec 16 17:31 vendor
+-rw-rw-r-- 1 tony tony  2227 Dec 16 17:54 xmlparse.php
+-rw-rw-r-- 1 tony tony 52700 Dec 16 17:55 zimbraAdmin.php

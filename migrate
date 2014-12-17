@@ -8,7 +8,8 @@
  */
 
 
-$zm_host = readline("Zimbra Host: ").PHP_EOL;
-$zm_user = readline("Zimbra Admin Username: ").PHP_EOL;
-$zm_password = readline("Zimbra Admin Password: ").PHP_EOL;
+require_once 'zimbraAdmin.php';
 
+$zm = new \zimbraAdmin('mail2.i-webb.net', 'admin@mail2.i-webb.net', '!AFtony19833');
+
+$domains = $zm->zimbra_get_all_domains();

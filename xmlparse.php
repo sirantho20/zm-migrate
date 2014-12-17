@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib;
+
 class xml2Array {
 
     var $stack=array();

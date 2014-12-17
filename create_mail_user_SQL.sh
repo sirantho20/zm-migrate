@@ -6,8 +6,7 @@
 
 # -------------------------------------------------------------------
 # Usage:
-#   * Edit these variables:
-#       STORAGE_BASE_DIRECTORY
+#   * Edit these variables:#       STORAGE_BASE_DIRECTORY
 #       DEFAULT_PASSWD='888888'
 #       USE_DEFAULT_PASSWD='NO'
 #       DEFAULT_QUOTA='100'   # 100 -> 100M
@@ -40,11 +39,11 @@ STORAGE_BASE_DIRECTORY="/var/vmail/vmail1"
 
 # Password setting.
 # Note: password will be crypted in MD5.
-DEFAULT_PASSWD='88888888'
-USE_DEFAULT_PASSWD='NO'     # If set to 'NO', password is the same as username.
+DEFAULT_PASSWD='P@ssw0rd'
+USE_DEFAULT_PASSWD='YES'     # If set to 'NO', password is the same as username.
 
 # Default mail quota.
-DEFAULT_QUOTA='100'   # 100 -> 100M
+DEFAULT_QUOTA='2000'   # 100 -> 100M
 
 # -------------- You may not need to change variables below -------------------
 # Mailbox format: mbox, Maildir.
@@ -68,7 +67,7 @@ STORAGE_BASE="$(dirname ${STORAGE_BASE_DIRECTORY})"
 STORAGE_NODE="$(basename ${STORAGE_BASE_DIRECTORY})"
 
 # Path to SQL template file.
-SQL="output.sql"
+SQL="dump/output.sql"
 echo '' > ${SQL}
 
 # Cyrpt the password.
