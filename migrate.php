@@ -109,7 +109,7 @@ class migrate {
                 $split = explode("@", $mailbox);
                 $name = $split[0];
                 $imap .= "imapsync --host1 ".$this->server." --ssl1 --ssl2 --user1 ".$mailbox." --password1 ". $this->pass.
-                    " --authuser1 ".$this->user." --host2 --folder Inbox --folder Sent --folderfirst Inbox ".$this->server2." --user2 ".$mailbox." --password2 ".$this->password2." && ";
+                    " --authuser1 ".$this->user." --host2 ".$this->server2." --user2 ".$mailbox." --password2 ".$this->password2." --folder Inbox --folder Sent --folderfirst Inbox";
 
                 echo "Mailbox $mailbox already exists. Skipping creation of $mailbox".PHP_EOL;
             }
