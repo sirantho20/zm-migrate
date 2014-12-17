@@ -37,7 +37,7 @@ class migrate {
 
         $this->pdo = new PDO(sprintf("mysql:dbname=%s;host=%s",$this->db_name,$this->db_host),$this->db_user, $this->db_pass);
         $this->zim = new \zimbraAdmin('mail2.i-webb.net', 'admin@mail2.i-webb.net', '!AFtony19833');
-        //$this->doMigrate();
+        $this->doMigrate();
 
     }
     public function getAllDomains()
@@ -65,7 +65,8 @@ class migrate {
             $this->insertDomain($domain);
             $this->createMailboxes($domain);
         }
-
+        file_put_contents('migrationScript.sh',substr($this->migrationScript,0,strlen($this->migrationScript)-4));
+        return;
 
     }
     public function insertDomain($name)
@@ -105,8 +106,8 @@ class migrate {
             {
                 $split = explode("@", $mailbox);
                 $name = $split[0];
-                $imap .= "imapsync --host1 ".$this->server." --authuser1 ".$this->user." --ssl1 --ssl2 --user1 ".$mailbox." --password1 ". $this->pass.
-                    " --host2 ".$this->server2." --user2 ".$mailbox." --password2 ".$this->password2." && ";
+                $imap .= "imapsync --host1 ".$this->server." --ssl1 --ssl2 --user1 ".$this->user." --password1 ". $this->pass.
+                    " --authuser1 ".$this->user." --host2 ".$this->server2." --user2 ".$mailbox." --password2 ".$this->password2." && ";
 
                 echo "Mailbox $mailbox already exists. Skipping creation of $mailbox".PHP_EOL;
             }
@@ -119,28 +120,21 @@ class migrate {
                 //exec("sh %s % %",realpath("create_mail_user_SQL.sh"),$domain, trim($name));
                 $imap .= "imapsync --host1 ".$this->server." --ssl1 --ssl2 --user1 ".$this->user." --password1 ". $this->pass.
                     " --authuser1 ".$this->user." --host2 ".$this->server2." --user2 ".$mailbox." --password2 ".$this->password2." && ";
-
-                //Delete old SQL file
-                echo 'Deleting old sql file'.PHP_EOL;
-                if(file_exists('dump/output.sql')){ unlink('dump/output.sql');}
-
-                //Generate SQL file
-                echo 'Generating new sql file for mailboxes'.PHP_EOL;
-                shell_exec("$cmd");
-
-                //Execue SQL to create mailboxes
-                echo 'Executing sql in db'.PHP_EOL;
-                $cr = "mysql -u".$this->db_user." -p".$this->db_pass." -h".$this->db_host." -D".$this->db_name." < ".realpath('dump/output.sql');
-                shell_exec("$cr");
-
             }
         }
+        //Delete old SQL file
+        echo 'Deleting old sql file'.PHP_EOL;
+        if(file_exists('dump/output.sql')){ unlink('dump/output.sql');}
 
-        // Write migration script
-        echo "Writing imapsync migration scripts to file".PHP_EOL;
-        file_put_contents('migrationScript.sh',substr($imap,0,strlen($imap)-4));
+        //Generate SQL file
+        echo 'Generating new sql file for mailboxes'.PHP_EOL;
+        shell_exec("$cmd");
 
-
+        //Execue SQL to create mailboxes
+        //echo 'Executing sql in db'.PHP_EOL;
+        //$cr = "mysql -u".$this->db_user." -p".$this->db_pass." -h".$this->db_host." -D".$this->db_name." < ".realpath('dump/output.sql');
+        //shell_exec("$cr");
+        $this->migrationScript .= $imap;
     }
 
     public function getDomainAccounts($domain)
@@ -177,8 +171,6 @@ class migrate {
 }
 
 $obj = new migrate('mail2.i-webb.net','tony@mail2.i-webb.net','AFtony19833','localhost','root','AFtony19833','vmail','mx.softcube.co');
-$domain = readline('Domain Name');
-$obj->createMailboxes($domain);
 //$obj->insertDomain('example.com');
 //print_r($obj->getDomainAccounts('bullion.com.gh'));
 //exec(sprintf("%s > %s 2>&1 & echo $! >> %s", "ls -la", 'dump/outfile', "dump/pid"),$out,$ret);
